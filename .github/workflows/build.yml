@@ -31,7 +31,7 @@ jobs:
 
       - name: Install system deps (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get update && sudo apt-get install -y libarchive-tools
+        run: sudo apt-get update && sudo apt-get install -y libarchive-tools xvfb libx11-dev libxkbcommon-x11-0 libxtst6
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -39,16 +39,21 @@ jobs:
       - name: Typecheck
         run: yarn typecheck
 
-      - name: Test
+      - name: Test (Windows)
+        if: matrix.os == 'windows-latest'
         run: yarn test
+
+      - name: Test (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: xvfb-run --auto-servernum yarn test
 
       - name: Build (Windows)
         if: matrix.os == 'windows-latest'
-        run: yarn build:win
+        run: yarn build:win --publish never
 
       - name: Build (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: yarn build:linux
+        run: yarn build:linux --publish never
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
