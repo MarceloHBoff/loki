@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  html,
+  body {
+    font-family: theme('fontFamily.sans');
+    font-size: 13px;
+    color: theme('colors.loki.text');
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom scrollbar (preserved from original styles.css). */
+.loki-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.loki-scroll::-webkit-scrollbar-thumb {
+  background: theme('colors.loki.border');
+  border-radius: 4px;
+}
